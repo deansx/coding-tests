@@ -1,0 +1,141 @@
+#!/bin/bash
+#
+#   USAGE:  gg [-c] [-nox] C++_src_files ...
+#
+#   DESCRIPTION:
+#     Script to compile and link (or, optionally, just compile) a list of C++ source
+#     files.  If the script successfully links the files, it attempts to execute the
+#     result.
+#
+#     Files may be either fully specified "hi.cc" or "hi.cpp" or just the root name
+#     may be provided "hi" and the script will attempt to create the correct filename
+#
+#   ARGUMENTS:
+#     [-c] - Tells the script not to bother with the link and execute steps.  It just
+#          attempts to compile the list of files
+#          NOTE:  Arguments are not order dependent.  "-c" may be specified anywhere
+#                 in the argument list
+#     
+#     [-nox] - Tells the script not to bother with the execute step.  It just
+#          attempts to compile and link the list of files
+#          NOTE:  Arguments are not order dependent.  "-nox" may be specified anywhere
+#                 in the argument list
+#     
+#     C++_file ... - a space separated list of C++ source files.  The script accepts
+#          both ".cc" and ".cpp" extensions.
+#          NOTE:  If no extension is specified, the script attempts to append the
+#                 correct extension to the base filename
+#   
+#   RETURNS:
+#     7 - represents failure of the script
+#     
+#   
+#   STATUS:  Prototype
+#   VERSION:  1.00
+#   CODER:  Dean Stevens
+#   
+#   LICENSE:  The MIT License (MIT)
+#             See LICENSE.txt in the root (sim) directory of this project.
+#   Copyright (c) 2014 Spinnaker Advisory Group, Inc.
+#
+
+#IDIRS="-I../desim/ -I ../../desim/ -I../util/ -I../../util/"
+IDIRS=""
+#DEFS="-DTEST_HARNESS"
+DEFS=""
+
+# Clean up the old a.exe
+if [ -f "a.exe" ]
+then
+    rm -fv a.exe
+fi
+
+
+# Will hold the list of files to compile/link
+FLST=""
+
+# The default case is to compile and link.  Initialize accordingly
+CMPLNK="-o a.exe"
+
+# Flag determining whether to execute the result, or not
+NOX=0
+
+function addf {
+#   DESCRIPTION:
+#     Adds a filename to the list of files to be compiled / linked.  The list is
+#     separated by spaces
+#
+#   ARGUMENTS:
+#     $1 - Full leaf name of the file to add to the list
+#     
+#   RETURNS:
+#     N/A
+#
+    FLST+=$1
+    FLST+=" "
+}
+
+for FIL in "$@"
+do
+    # Test for the compile only flag.
+    if [[ "$FIL" == "-c" ]]
+    then
+	CMPLNK="-c"
+    # Test for the no_execute flag.
+    elif [[ "$FIL" == "-nox" ]]
+    then
+	NOX=1
+    # Process the file arguments one at a time
+    elif [ -f "$FIL" ]
+    then
+	# See if the caller used a recognized extension.  If so, add it to the list
+	if [[ "$FIL" == *.cc || "$FIL" == *.cpp ]]
+        then
+	    addf "$FIL"
+	else
+	    echo "'$FIL' NOT RECOGNIZED AS A C++ FILE"
+            exit 7
+        fi
+    # See if basename + a recognized extension exists as a file.  If it does add it to
+    # the list
+    elif [ -f "$FIL.cc" ]
+    then
+	addf "$FIL.cc"
+    elif [ -f "$FIL.cpp" ]
+    then
+	addf "$FIL.cpp"
+    else
+	echo "ERROR:  No C++ Source file found for: \"$FIL\" - Exiting..."
+	exit 7
+    fi
+done
+
+# remove trailing whitespace characters from the list
+FLST="${FLST%"${FLST##*[![:space:]]}"}"
+
+if [[ $CMPLNK == "-c" ]]
+then
+    echo -e "\nAttempt to compile: $FLST ...\n"
+else
+    echo -e "\nAttempt to compile and link: $FLST ...\n"
+fi
+echo ""
+
+g++ -g -std=c++11 $IDIRS $DEFS $CMPLNK $FLST
+
+if [ $? -eq 0 ]
+then
+    if [[ $CMPLNK == "-c" ]]
+    then
+	echo "NOTE:  \"$FLST\" Compiled!"
+    else
+        echo "NOTE:  \"$FLST\" Compiled & Linked!"
+        if [ $NOX -eq 0 ]
+        then
+	    echo -e "\nExecuting...\n"
+            a.exe
+	fi
+    fi
+else
+    echo "ERROR:  >=One of \"$FLST\" FAILED to Compile / Link."
+fi
