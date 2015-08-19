@@ -13,7 +13,7 @@ solutions to a coding problem that was presented in a real interview.
 
 Tests
 ----------------------
-* replace-words - write a program that takes groups of words that each map
+* [replace-words](./replace-words) - write a program that takes groups of words that each map
 to a specific replacement word. Then process a sentence replacing words in
 the sentence that match a word in one of the groups with the corresponding
 mapped word.  Also include documentation and tests.  I did this one in both

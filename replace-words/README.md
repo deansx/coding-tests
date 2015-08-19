@@ -4,7 +4,7 @@ replace-words/
 Description
 ----------------------
 This is a straightforward coding exercise. The sub directories
-[Python](./Python/) and [C++](./cpp/) contain sample implementations in their
+[Python](./python/) and [C++](./cpp/) contain sample implementations in their
 respective languages
 
 Requirements
@@ -33,7 +33,7 @@ Support
 ----------------------
 
 If you have any questions, problems, or suggestions, please submit an
-[issue](../../issues)
+[issue](../../../issues)
 
 Copyright and License
 ----------------------
