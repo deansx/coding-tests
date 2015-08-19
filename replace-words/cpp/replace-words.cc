@@ -12,7 +12,7 @@
 *         replacement word
 *         Examples:
 *           {jack, jill} => NAME - both "jack" and "jill" map to "NAME"
-*           {one, two, three, …, nine} => NUM - the words representing
+*           {one, two, three, ..., nine} => NUM - the words representing
 *                                                  integers one through nine
 *                                                  map to "NUM"
 *     
