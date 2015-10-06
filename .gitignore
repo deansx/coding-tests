@@ -4,10 +4,13 @@
 .\#*
 # sed backups
 *.pyr
+# vi backups
+*.swp
 # compiled & intermediate files
 *.o
 *.d
 *.exe
+*.pyc
 # Json output files
 *.json
 # Python files
