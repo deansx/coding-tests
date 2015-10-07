@@ -18,7 +18,8 @@ If a Python interpreter is installed, all of these can be run on the linux
 command line.  Note that line endings are linux style, which could might cause
 a problem in Windows, as might the soft link.
 
-A [C++ version](../cpp) is also available.
+Both [C++](../cpp) and [rust](../rust) versions are also available.
+
 
 Requirements
 ----------------------

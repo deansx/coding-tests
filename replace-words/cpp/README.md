@@ -11,7 +11,7 @@ This directory contains a C++ source file and a corresponding makefile:
 This code was developed and tested on Linux using GNU tools. Your mileage may
 vary on other platforms.
 
-A [Python version](../python) is also available.
+Both [Python](../python) and [rust](../rust) versions are also available.
 
 Requirements
 ----------------------

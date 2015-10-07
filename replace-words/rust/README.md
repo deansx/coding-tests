@@ -25,8 +25,7 @@ build:
 If you don't have rust installed, you should. [Get it here](https://www.rust-lang.org/downloads.html).
 
 
-Both [C++ version](../cpp) and [Python](../python) versions are also
-available.
+Both [C++](../cpp) and [Python](../python) versions are also available.
 
 Coding Test Requirements
 ----------------------
