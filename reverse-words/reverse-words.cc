@@ -11,9 +11,10 @@
 *         still readable normally.
 *
 *     CONSTRAINTS:
-*       > Do not us large amounts of extra storage.  Very limited local scope
-*         variables are OK, but you can't do things like buffer up chunks
-*         of the string or allocate a new list of the words for reversal.
+*       > Do not use large amounts of extra storage.  Very limited local
+*         scope variables are OK, but you can't do things like buffer up
+*         chunks of the string or allocate a new list of the words for
+*         reversal.
 *     
 *     EXAMPLE:
 *       > "The pen is red" becomes "red is pen The"
