@@ -57,7 +57,7 @@ Support
 ----------------------
 
 If you have any questions, problems, or suggestions, please submit an
-[issue](../issues)
+[issue](../../../issues)
 
 Copyright and License
 ----------------------
