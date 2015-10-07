@@ -1,4 +1,4 @@
-replace-words/cpp
+reverse-words
 =========================
 
 Description
@@ -6,17 +6,37 @@ Description
 
 This directory contains a C++ source file and a corresponding makefile:
 
-* **replace-words.cc** - the source code to perform the mapping replacement
+* **reverse-words.cc** - the source code to reverse the order of the words in
+a string while still allowing individual words to be read normally
 
 This code was developed and tested on Linux using GNU tools. Your mileage may
 vary on other platforms.
 
-Both [Python](../python) and [rust](../rust) versions are also available.
 
 Requirements
 ----------------------
-The written [requirements](../README.md) for this exercise are available in
-the parent directory's [README](../README.md)
+
+Given a string, reverse the words, so that the last word becomes the 
+first word, but each word still reads normally.
+
+**INPUTS:**
+
+* A string containing words separated by a single space
+
+**OUTPUT:**
+
+* A string with the order of the words reversed, but each word is
+still readable normally.
+
+**CONSTRAINTS:**
+
+Do not us large amounts of extra storage.  Very limited local scope
+variables are OK, but you can't do things like buffer up chunks
+of the string or allocate a new list of the words for reversal.
+
+**EXAMPLE:**
+
+    "The pen is red" becomes "red is pen The"
 
 Building and Execution
 ----------------------
@@ -26,18 +46,18 @@ working directory to this project's source directory and type the following
 at the terminal prompt:
 
     make
-    replace-words
+    reverse-words
 
 Alternatively, you can compile link and execute the program by typing the
 the following at the terminal prompt:
 
-    ../../tools/gg replace-words.cc
+    ../../tools/gg reverse-words.cc
 
 Support
 ----------------------
 
 If you have any questions, problems, or suggestions, please submit an
-[issue](../../../issues)
+[issue](../../issues)
 
 Copyright and License
 ----------------------
