@@ -51,7 +51,7 @@ at the terminal prompt:
 Alternatively, you can compile link and execute the program by typing the
 the following at the terminal prompt:
 
-    ../../tools/gg reverse-words.cc
+    ../tools/gg reverse-words.cc
 
 Support
 ----------------------
