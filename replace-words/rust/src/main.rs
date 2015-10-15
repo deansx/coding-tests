@@ -49,7 +49,7 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fmt;
 use std::ascii::AsciiExt;
-use std::process;
+//use std::process;
 
 //
 // WordMap manages sets of words that each "map" to a specified specified
@@ -59,8 +59,10 @@ use std::process;
 //    - adding new words to the match set
 //    - searching for a word in the match set,
 //    - producing the mapped word
+// NOTE:
+//    - Public so that the struct can be accessed by the test module
 
-struct WordMap<'a> {
+pub struct WordMap<'a> {
     map:HashMap<&'a str, &'a str>,
 }
 
@@ -110,6 +112,7 @@ impl<'a> WordMap<'a> {
     // Returns:
     //   String containing a version of the original phrase, in which mapped
     //   words have been replaced by their mapped value.
+    #[cfg(test)]
     fn run_map(&self, the_str: &str) -> String {
         let svec = the_str.split(' ').collect::<Vec<_>>();
         let substr: Vec<_> = svec.iter().map(|w| {
@@ -149,11 +152,12 @@ impl<'a> WordMap<'a> {
 //    - A new sentence with the tagged words replaced by their respective
 //        mapped words.
 //
-// NOTE:
-//    Currently this is a single use object. Create a new one if you want
-//    to map a different phrase.
+// NOTES:
+//    - Currently this is a single use object. Create a new one if you want
+//        to map a different phrase.
+//    - Public so that the struct can be accessed by the test module
 
-struct MapSentence<'a> {
+pub struct MapSentence<'a> {
     input_str: &'a str,
 }
 
@@ -232,137 +236,131 @@ impl<'a> fmt::Display for MapSentence<'a> {
     }
 }
 
+#[cfg(test)]
 //
 // Run the test functions
 // Returns:
 //    tuple containing the number of tests that passed in the first position
 //       and the number than failed in the second position
+mod tests {
+    // NOTE: By default, you won't see the output of the println!s from the
+    //      test functions.  In searching for an explanation, I came across
+    //      this most helpful discussion:
+    //          http://stackoverflow.com/questions/25106554/println-doesnt-work-in-rust-unit-tests
+    //      "[the] Rust test program hides stdout of successful tests in order
+    //      for [the] test output to be tidy. You can disable this behavior 
+    //      [by] passing --nocapture option."
+    //      However, in the same thread, we find out that, due to another issue,
+    //      the actual command that works is:
+    //
+    //          cargo test -- --nocapture
 
-fn run_tests() -> (u32, u32){
-    // pass fail counters
-    let mut passed:u32 = 0;
-    let mut failed:u32 = 0;
-    // Test the WordMap object
-    println!("\nTesting WordMap...\n");
-    let mut tm1 = WordMap::new();
-    // Set up some mapping values, each token in the first argument will
-    // map to the second argument
-    tm1.add_map("ghi mno", "zigbee");
-    tm1.add_map("def stu vwx", "802.11s");
-    
-    // Run the test mapping function and check the results
-    let mapped = tm1.run_map("abc def ghi jkl mno pqr stu vwx yza bcd");
-    println!("Mapped is: '{}'", mapped);
-    let mapped_chk = 
-        "abc+802.11s+zigbee+jkl+zigbee+pqr+802.11s+802.11s+yza+bcd".to_string();
+    use super::*;
 
-    check_result( mapped_chk
-                 ,mapped
-                 ,"WordMap run_map"
-                 ,&mut passed
-                 ,&mut failed
-                );
-
-    // Check for key retrieval
-    let tvec = vec!["vwx", "jkl", "mno", "xyz", "def"];
-    let mut matches = Vec::new();
-    let mut unmatched = Vec::new();
-    for k in &tvec {
-        match tm1.get(k){
-            Some(matched) => {
-                let result = format!("{}:{}",k, matched);
-                matches.push(result);
-            }
-            None => {
-                unmatched.push(*k);
-            }
-        }
+    #[test]
+    fn test_wordmap() {
+        // Set up some mapping values, each token in the first argument will
+        // map to the second argument
+        let wordmap = create_test_wordmap();
+        // Run the test mapping function and check the results
+        let mapped = wordmap.run_map("abc def ghi jkl mno pqr stu vwx yza bcd");
+        
+        let mapped_chk = "abc+802.11s+zigbee+jkl+zigbee+pqr+802.11s+\
+                          802.11s+yza+bcd";
+        print!( "\n   Mapped is: '{}'\n   Check is:  '{}'..."
+               ,mapped
+               ,mapped_chk
+              );
+        assert_eq!(mapped, mapped_chk.to_string());
     }
-    // Reference values
-    let matched_chk = "vwx:802.11s, mno:zigbee, def:802.11s".to_string();
-    let unmatched_chk = "jkl, xyz".to_string();
-    check_result( matched_chk
-                 ,matches.join(", ")
-                 ,"WordMap retrieve keys"
-                 ,&mut passed
-                 ,&mut failed
-                );
-    check_result( unmatched_chk
-                 ,unmatched.join(", ")
-                 ,"WordMap can't retrieve keys"
-                 ,&mut passed
-                 ,&mut failed
-                );
 
-    println!("\nTesting MapSentence...\n");
-    let orig_phrase = "Abc DEF Ghi Jkl MNO Pqr STU Vwx YZA bcd eFg";
-    let ms1 = MapSentence::new(orig_phrase);
-    println!("ms1 contains: '{}'\n", ms1);
-    let (orig_string, mapped_string, tagged, untagged) = ms1.mapit(&tm1);
+    #[test]
+    fn test_wordmap_key_retrieval() {
+        let tvec = vec!["vwx", "jkl", "mno", "xyz", "def"];
+        let mut matches = Vec::new();
+        let mut unmatched = Vec::new();
+        let wordmap = create_test_wordmap();
 
-    check_result( orig_phrase.to_string()
-                 ,orig_string
-                 ,"MapSentence: Original String"
-                 ,&mut passed
-                 ,&mut failed
-                );
-    let map_str_chk = "abc 802.11s zigbee jkl zigbee pqr 802.11s \
-                       802.11s yza bcd efg".to_string();
-    let tagged_chk = "def, ghi, mno, stu, vwx".to_string();
-    let untagged_chk = "abc, bcd, efg, jkl, pqr, yza".to_string();
-    
-    check_result( map_str_chk
-                 ,mapped_string
-                 ,"MapSentence: Mapped String"
-                 ,&mut passed
-                 ,&mut failed
-                );
-    // We get the matched / unmatched tokens back in arbitrary order,
-    // so we need to sort them using sorted_toks() before we pass them
-    // off to check the results
-    check_result( tagged_chk
-                 ,sorted_toks(tagged)
-                 ,"MapSentence: Tagged Tokens"
-                 ,&mut passed
-                 ,&mut failed
-                );
-    check_result( untagged_chk
-                 ,sorted_toks(untagged)
-                 ,"MapSentence: UnTagged Tokens"
-                 ,&mut passed
-                 ,&mut failed
-                );
-
-    /*
-    * --- Nested functions
-    */
-    // Compares the expected and result strings. If they are equal the test
-    // passes, the pass counter is incremented and the appropriate string
-    // is sent to the terminal
-    // Args:
-    //    expected - String representing the expected value
-    //    result - String representing the actual value
-    //    test - str ref containing the name of the test
-    //    pass - counter of tests that passed
-    //    fail - counter of tests that failed
-    fn check_result( expected: String
-                     ,result: String
-                     ,test: &str
-                     ,pass: &mut u32
-                     ,fail: &mut u32
-                     ) {
-        if expected == result {
-            *pass += 1;
-            println!("NOTE: {} passed\n      '{}'", test, result);
-        } else {
-            *fail += 1;
-            println!("ERROR: {} FAILED with:\n   \
-                      '{}'\nExpecting:\n   '{}'"
-                     ,test
-                     ,result
-                     ,expected
-                     );
+        for k in &tvec {
+            match wordmap.get(k){
+                Some(matched) => {
+                    let result = format!("{}:{}",k, matched);
+                    matches.push(result);
+                }
+                None => {
+                    unmatched.push(*k);
+                }
+            }
         }
+        // Reference values
+        let matched_chk = "vwx:802.11s, mno:zigbee, def:802.11s";
+        let unmatched_chk = "jkl, xyz";
+        assert_eq!(matches.join(", "), matched_chk.to_string());
+        assert_eq!(unmatched.join(", "), unmatched_chk.to_string());
+    }
+
+    #[test]
+    fn test_mapsentence_original_phrase() {
+        let (orig_string, _, _, _) = get_mapsentence_results();
+        let orig_phrase_chk = "Abc DEF Ghi Jkl MNO Pqr STU Vwx YZA bcd eFg";
+        assert_eq!(orig_string, orig_phrase_chk.to_string())
+    }
+
+
+    #[test]
+    fn test_mapsentence_mapped_string() {
+        let (_, mapped_string, _, _) = get_mapsentence_results();
+        let map_string_chk = "abc 802.11s zigbee jkl zigbee pqr 802.11s \
+                           802.11s yza bcd efg";
+        assert_eq!(mapped_string, map_string_chk.to_string())
+    }
+
+
+    #[test]
+    fn test_mapsentence_tagged_words() {
+        let (_, _, tagged, _) = 
+                                                  get_mapsentence_results();
+        let tagged_chk = "def, ghi, mno, stu, vwx";
+        assert_eq!(sorted_toks(tagged), tagged_chk.to_string())
+    }
+
+    #[test]
+    fn test_mapsentence_untagged_words() {
+        let (_, _, _, untagged) = 
+                                                  get_mapsentence_results();
+        let untagged_chk = "abc, bcd, efg, jkl, pqr, yza";
+        assert_eq!(sorted_toks(untagged), untagged_chk.to_string())
+    }
+
+
+    // Testing utility functions...
+
+    // Returns:
+    //  A set of (hopefully) predictable output from using both a known
+    //  original phrase and a known mapping.
+    fn get_mapsentence_results() -> 
+                              (String, String, String, String) {
+        let map_sentc = create_test_mapsentence();
+        let wordmap = create_test_wordmap();
+        map_sentc.mapit(&wordmap)
+    }
+
+    // Returns:
+    //  A new WordMap instance with a known set of mapping data
+    fn create_test_wordmap<'a>() -> WordMap<'a> {
+        let mut wordmap = WordMap::new();
+        // Set up some mapping values, each token in the first argument will
+        // map to the second argument
+        wordmap.add_map("ghi mno", "zigbee");
+        wordmap.add_map("def stu vwx", "802.11s");
+        return wordmap;
+    }
+
+    // Returns:
+    //  A new MapSentence instance with a known phrase
+    fn create_test_mapsentence<'a>() -> MapSentence<'a> {
+        let orig_phrase = "Abc DEF Ghi Jkl MNO Pqr STU Vwx YZA bcd eFg";
+        MapSentence::new(orig_phrase)
     }
 
     // Takes the given string of tokens, breaks them up, sorts them, and
@@ -376,21 +374,13 @@ fn run_tests() -> (u32, u32){
         toks.sort();
         toks.join(", ")
     }
-    
-    /*
-    * --- Returned values
-    */
-    (passed, failed)
 }
 
+
 fn main() {
-    let (passed, failed) = run_tests();
-    if failed > 0 {
-        println!("ERROR: {} Tests Failed. Exiting", failed);
-        process::exit(1);
-    } else {
-        println!("CONGRATULATIONS! All {} tests passed.\n", passed);
-    }
+    // Use the command 'cargo test' or 'cargo test -- --nocapture' to run
+    // the tests. The latter form displays some additional text during the
+    // test.
 
     println!("\nRunning replace-words...\n");
     let mut word_map = WordMap::new();
