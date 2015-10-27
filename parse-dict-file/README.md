@@ -7,7 +7,8 @@ Description
 This directory contains a Python source file and a test data file:
 
 * **parse.py** - the main python code to implement this test
-* **testdata.txt** - data file provided for this test. **Must not be modified
+* **testdata.txt** - data file provided for this test. **As per the
+written instructions, this data file must not be modified
 in any way**
 
 If a Python interpreter is installed, parse.py can be run on the linux
@@ -67,7 +68,7 @@ An ordered (by alpha) sort of all items at the upper level
     "organCounter": "0x1E"
     "organs": [{"heart": "central", "lifeCycleState": 1}, {"filter": "True", "liver": "central", "lifeCycleState": 2, "cellCount": "0xDEADBEEF", "bloodType": "A-", "source": "chicken"}, {"stomach": "central", "lifeCycleState": 2}, {"digestive": "True", "intestine": "central", "lifeCycleState": 2, "full": "False", "length": "0x15", "content": None}, {"esophagus": "central", "lifeCycleState": 7}, {"filter": "True", "kidney": "left", "lifeCycleState": 2, "cellCount": "0xFACEFACE", "bloodType": "A-", "source": "chicken"}, {"filter": "True", "kidney": "right", "lifeCycleState": 2, "cellCount": "0xFACEFACE", "bloodType": "A-", "source": "chicken"}, {"optic": "True", "eye": "left", "lifeCycleState": 1, "functional": "True", "used": "True", "blind": "False”}]
     "things in my head": {"childhood memories": 500, "adolescent memories": 150, "forgotten memories": 6640, "new memories": 13}
-"versionNumber": [48]
+    "versionNumber": [48]
 
 Execution
 ----------------------
