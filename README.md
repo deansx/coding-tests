@@ -30,6 +30,9 @@ I used C++ for this one.
 structure, print the tree one level at a time, without using extensive
 secondary storage. The implementation uses Python
 
+* [parse-dict-file](./parse-dict-file) - Parse a data file provided as part of
+the test and then extract specified data from the resulting collection.
+
 * more coming soon
 
 Support
