@@ -13,11 +13,22 @@ solutions to a coding problem that was presented in a real interview.
 
 Tests
 ----------------------
-* [replace-words](./replace-words) - write a program that takes groups of words that each map
+* [replace-words](./replace-words) - write a program that takes groups of
+words that each map
 to a specific replacement word. Then process a sentence replacing words in
 the sentence that match a word in one of the groups with the corresponding
 mapped word.  Also include documentation and tests.  I did this one in both
-C++ and Python. Both results are included.
+[C++](./replace-words/cpp) and [Python](./replace-words/python) for the test.
+Both results are included. I later added a [Rust](./replace-words/rust)
+implementation just for fun
+
+* [reverse-words](./reverse-words) - given a string, reverse the words, so
+that the last word becomes the first word, but each word still reads normally.
+I used C++ for this one.
+
+* [display-tree-by-level](./display-tree-by-level) - given a tree data
+structure, print the tree one level at a time, without using extensive
+secondary storage. The implementation uses Python
 
 * more coming soon
 
