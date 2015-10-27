@@ -1,0 +1,77 @@
+Mar 13 11:22:21.265 [49668/50b/main-thread] <Warning> main:367  Command likes to print things
+Mar 13 11:22:21.265 [49668/50b/main-thread] <Warning> main:368  Run without verbose to silence extra output
+{
+  "box1" : {
+    "item1" : "this is the first item in box 1",
+    "item2" : "this is the second item in box 1"
+  },
+  "things in my head" : {
+    "childhood memories" : 500,
+    "adolescent memories" : 150,
+    "forgotten memories" : 6640,
+    "new memories" : 13
+  },
+  "memory counter" : "000000",
+  "container" : "container key says 'hi'",
+  "item type" : "brain",
+  "organs" : [
+    {
+      "heart" : "central",
+      "lifeCycleState" : 1
+    },
+    {
+      "filter" : "True",
+      "liver" : "central",
+      "lifeCycleState" : 2,
+      "cellCount" : "0xDEADBEEF",
+      "bloodType" : "A-",
+      "source" : "chicken"
+    },
+    {
+      "stomach" : "central",
+      "lifeCycleState" : 2
+    },
+    {
+      "digestive" : "True",
+      "intestine" : "central",
+      "lifeCycleState" : 2,
+      "full" : "False",
+      "length" : "0x15",
+      "content" : None
+    },
+    {
+      "esophagus" : "central",
+      "lifeCycleState" : 7
+    },
+    {
+      "filter" : "True",
+      "kidney" : "left",
+      "lifeCycleState" : 2,
+      "cellCount" : "0xFACEFACE",
+      "bloodType" : "A-",
+      "source" : "chicken"
+    },
+    {
+      "filter" : "True",
+      "kidney" : "right",
+      "lifeCycleState" : 2,
+      "cellCount" : "0xFACEFACE",
+      "bloodType" : "A-",
+      "source" : "chicken"
+    },
+    {
+      "optic" : "True",
+      "eye" : "left",
+      "lifeCycleState" : 1,
+      "functional" : "True",
+      "used" : "True",
+      "blind" : "False"
+    }
+  ],
+  "organCounter" : "0x1E",
+  "versionNumber" : [
+    48
+  ]
+}
+Mar 13 11:22:21.265 [49668/50b/main-thread] <Warning> main:367  Tail output is extra!
+Mar 13 11:22:21.265 [49668/50b/main-thread] <Warning> main:368  Two for the price of one
