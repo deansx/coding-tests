@@ -7,9 +7,9 @@ Description
 This directory contains a Python source file and a test data file:
 
 * **parse.py** - the main python code to implement this test
-* **testdata.txt** - data file provided for this test. **As per the
+* **testdata.txt** - data file provided for this test. *As per the
 written instructions, this data file must not be modified
-in any way**
+in any way*
 
 If a Python interpreter is installed, parse.py can be run on the linux
 command line.  Note that line endings are linux style, which might cause
