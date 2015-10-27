@@ -27,11 +27,12 @@ demonstrates simple minded tokenization and some simple data structures.
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-  
-    CODER:   Dean Stevens
-    STATUS:  Sample
-    VERSION: 0.1
 """
+
+__author__ = "Dean Stevens"
+__status__ = "Sample"
+__version__ = "0.1.0"
+
 
 class WordMap(object):
     """WordMap manages a set of words that "map" to a specified word.
