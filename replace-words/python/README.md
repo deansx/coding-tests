@@ -15,7 +15,7 @@ And one soft link:
 the test scripts.
 
 If a Python interpreter is installed, all of these can be run on the linux
-command line.  Note that line endings are linux style, which could might cause
+command line.  Note that line endings are linux style, which might cause
 a problem in Windows, as might the soft link.
 
 Both [C++](../cpp) and [rust](../rust) versions are also available.

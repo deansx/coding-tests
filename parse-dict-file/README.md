@@ -10,8 +10,8 @@ This directory contains a Python source file and a test data file:
 * **testdata.txt** - data file provided for this test. **Must not be modified
 in any way**
 
-If a Python interpreter is installed, all of these can be run on the linux
-command line.  Note that line endings are linux style, which could might cause
+If a Python interpreter is installed, parse.py can be run on the linux
+command line.  Note that line endings are linux style, which might cause
 a problem in Windows.
 
 This code was developed using Python3 and tested on Linux using GNU tools.
@@ -50,15 +50,15 @@ Usage from command line should be the following:
 
 ## Output of the program should be the following:
 
-1. A list of all organs with a "central" attribute
+A list of all organs with a "central" attribute
 
     [“heart", "liver", "stomach", "intestine", "esophagus”]
 
-2. A dictionary of key-value pair of all the "things in my head”
+A dictionary of key-value pair of all the "things in my head”
 
     {"childhood memories": 500, "adolescent memories": 150, "forgotten memories": 6640, "new memories": 13}
 
-3. An ordered (by alpha) sort of all items at the upper level
+An ordered (by alpha) sort of all items at the upper level
 
     "box1": {"item1": "this is the first item in box 1", "item2": "this is the second item in box 1"}
     "container": "container key says 'hi'"
